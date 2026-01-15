@@ -1,8 +1,8 @@
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { useAuth } from "../hooks/useAuth";
-import { useAuthModal } from "../hooks/useAuthModal";
+import { useAuth } from "@/hooks/useAuth";
+import { useAuthModal } from "@/hooks/useAuthModal";
 import "./NavigationBar.css";
-import textLogo from "../assets/text.png";
+import textLogo from "@/assets/text.png";
 
 const NavigationBar = () => {
   const { user, isAuthenticated, logout } = useAuth();

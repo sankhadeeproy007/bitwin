@@ -7,10 +7,10 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { useBitcoinPrice } from "../hooks/useBitcoinPrice";
-import { useAuth } from "../hooks/useAuth";
-import { useAuthModal } from "../hooks/useAuthModal";
-import logo from "../assets/logo.png";
+import { useBitcoinPrice } from "@/hooks/useBitcoinPrice";
+import { useAuth } from "@/hooks/useAuth";
+import { useAuthModal } from "@/hooks/useAuthModal";
+import logo from "@/assets/logo.png";
 import "./Game.css";
 
 const Game = () => {
