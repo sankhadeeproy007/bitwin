@@ -5,11 +5,14 @@ import outputs from "../amplify_outputs.json";
 
 import "./index.css";
 import App from "./App.tsx";
+import { CustomThemeProvider } from "./theme";
 
 Amplify.configure(outputs);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <CustomThemeProvider>
+      <App />
+    </CustomThemeProvider>
   </StrictMode>
 );
