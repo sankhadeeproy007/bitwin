@@ -1,9 +1,9 @@
-import Game from "./components/Game";
-import NavigationBar from "./components/NavigationBar";
-import AuthModal from "./components/AuthModal";
-import { AuthModalProvider } from "./contexts/AuthModalProvider";
-import { useAuthModal } from "./hooks/useAuthModal";
-import { useAuth } from "./hooks/useAuth";
+import Game from "@/components/Game/Game";
+import NavigationBar from "@/components/NavigationBar/NavigationBar";
+import AuthModal from "@/components/AuthModal/AuthModal";
+import { AuthModalProvider } from "@/contexts/AuthModalProvider";
+import { useAuthModal } from "@/hooks/useAuthModal";
+import { useAuth } from "@/hooks/useAuth";
 
 const AppContent = () => {
   const { checkAuth } = useAuth();

@@ -9,7 +9,7 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useAuthForm } from "../hooks/useAuthForm";
+import { useAuthForm } from "@/hooks/useAuthForm";
 import "./AuthModal.css";
 
 interface AuthModalProps {
