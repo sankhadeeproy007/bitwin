@@ -4,6 +4,7 @@ const schema = a.schema({
   Player: a
     .model({
       userId: a.string().required(),
+      username: a.string().required(),
       score: a.integer().default(0),
       activeGuess: a.json(),
     })

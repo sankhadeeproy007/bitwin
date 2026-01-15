@@ -8,6 +8,16 @@ export const GET_PLAYER_QUERY = `
   }
 `;
 
+export const CREATE_PLAYER_MUTATION = `
+  mutation CreatePlayer($userId: String!, $score: Int!) {
+    createPlayer(userId: $userId, score: $score) {
+      userId
+      score
+      activeGuess
+    }
+  }
+`;
+
 export const UPDATE_PLAYER_ACTIVE_GUESS_MUTATION = `
   mutation UpdatePlayer($userId: String!, $activeGuess: AWSJSON!) {
     updatePlayer(userId: $userId, activeGuess: $activeGuess) {

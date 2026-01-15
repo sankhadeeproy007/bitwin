@@ -1,5 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 
+const BITCOIN_API_URL = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
+
+const PRICE_UPDATE_INTERVAL = 5000;
+
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -7,6 +11,15 @@ const formatPrice = (price: number) => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(price);
+};
+
+const fetchBitcoinPrice = async (): Promise<number> => {
+  const response = await fetch(BITCOIN_API_URL);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Bitcoin price: ${response.statusText}`);
+  }
+  const data = await response.json();
+  return parseFloat(data.data.amount);
 };
 
 export const useBitcoinPrice = () => {
@@ -19,43 +32,36 @@ export const useBitcoinPrice = () => {
   }, [price]);
 
   useEffect(() => {
-    const ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
+    let isMounted = true;
+    let intervalId: NodeJS.Timeout | null = null;
 
-    ws.onopen = () => {
-      setLoading(false);
-      setError(null);
-      ws.send(
-        JSON.stringify({
-          type: "subscribe",
-          product_ids: ["BTC-USD"],
-          channels: ["ticker"],
-        })
-      );
-    };
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === "ticker" && data.price) {
-        setPrice(parseFloat(data.price));
+    const updatePrice = async () => {
+      try {
+        const newPrice = await fetchBitcoinPrice();
+        if (!isMounted) return;
+        setPrice(newPrice);
         setLoading(false);
         setError(null);
+      } catch {
+        if (!isMounted) return;
+        setError("Failed to fetch Bitcoin price");
+        setLoading(false);
       }
     };
 
-    ws.onerror = () => {
-      setError("Failed to connect to price feed");
-      setLoading(false);
-    };
+    // Fetch immediately
+    updatePrice();
 
-    ws.onclose = () => {
-      setError("Connection closed");
-      setLoading(false);
-    };
+    // Then fetch every 5 seconds
+    intervalId = setInterval(updatePrice, PRICE_UPDATE_INTERVAL);
 
     return () => {
-      ws.close();
+      isMounted = false;
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     };
   }, []);
 
-  return { price, formattedPrice, loading, error };
+  return { price: formattedPrice, loading, error };
 };

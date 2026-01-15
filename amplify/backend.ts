@@ -14,3 +14,15 @@ export const backend = defineBackend({
   placeGuess,
   resolveGuess,
 });
+
+// Remove password restrictions - allow any password
+const { cfnUserPool } = backend.auth.resources.cfnResources;
+cfnUserPool.policies = {
+  passwordPolicy: {
+    minimumLength: 6,
+    requireLowercase: false,
+    requireNumbers: false,
+    requireSymbols: false,
+    requireUppercase: false,
+  },
+};

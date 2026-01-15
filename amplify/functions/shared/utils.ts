@@ -1,3 +1,5 @@
+const BITCOIN_API_URL = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
+
 export interface ActiveGuess {
   direction: "up" | "down";
   timestamp: string;
@@ -12,15 +14,16 @@ export interface Player {
 }
 
 /**
- * Fetches current Bitcoin price from CoinGecko API
+ * Fetches current Bitcoin price from Coinbase API
  */
 export async function getCurrentBitcoinPrice(): Promise<number> {
   try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-    );
+    const response = await fetch(BITCOIN_API_URL);
+    if (!response.ok) {
+      throw new Error(`Coinbase API error: ${response.statusText}`);
+    }
     const data = await response.json();
-    return data.bitcoin.usd;
+    return parseFloat(data.data.amount);
   } catch (error) {
     console.error("Error fetching Bitcoin price:", error);
     throw new Error("Failed to fetch Bitcoin price");
