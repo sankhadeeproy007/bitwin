@@ -1,0 +1,31 @@
+.homePageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.priceCard {
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.errorAlert {
+  margin: 1rem 0;
+}
+
+.priceDisplay {
+  font-weight: bold;
+  margin: 1.5rem 0;
+}
