@@ -8,12 +8,21 @@ import {
   Alert,
 } from "@mui/material";
 import { useBitcoinPrice } from "../hooks/useBitcoinPrice";
+import { useAuth } from "../hooks/useAuth";
+import { useAuthModal } from "../hooks/useAuthModal";
+import logo from "../assets/logo.png";
 import "./Game.css";
 
 const Game = () => {
-  const { formattedPrice, loading, error } = useBitcoinPrice();
+  const { price, loading, error } = useBitcoinPrice();
+  const { isAuthenticated } = useAuth();
+  const { openAuthModal } = useAuthModal();
 
   const handlePlaceGuess = () => {
+    if (!isAuthenticated) {
+      openAuthModal();
+      return;
+    }
     // TODO: Implement guess placement logic
     console.log("Place guess clicked");
   };
@@ -21,9 +30,7 @@ const Game = () => {
   return (
     <Container maxWidth="md">
       <Box className="homePageContainer">
-        <Typography variant="h3" component="h1" gutterBottom>
-          Bitcoin Price Guessing Game
-        </Typography>
+        <img src={logo} alt="BitWin Logo" className="bitwinLogo" />
 
         <Paper elevation={3} className="priceCard">
           <Typography variant="h6" color="primary" gutterBottom>
@@ -42,9 +49,9 @@ const Game = () => {
             </Alert>
           )}
 
-          {formattedPrice && !loading && (
+          {price && !loading && (
             <Typography variant="h2" color="primary" className="priceDisplay">
-              {formattedPrice}
+              {price}
             </Typography>
           )}
 
