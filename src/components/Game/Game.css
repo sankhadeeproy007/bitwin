@@ -33,3 +33,14 @@
 .priceDisplay {
   margin: 1.5rem 0 !important;
 }
+
+.scoreCard {
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.scoreDisplay {
+  margin: 1.5rem 0 !important;
+}
